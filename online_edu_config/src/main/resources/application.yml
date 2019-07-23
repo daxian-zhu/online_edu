@@ -18,9 +18,6 @@ spring:
           - user_center
           - oauth
           - customer
-          - student
-          username: zhuwei680913@163.com
-          password: zwass1314
           basedir: C:/work/config/tmp
           force-pull: true
     #开启消息总线
