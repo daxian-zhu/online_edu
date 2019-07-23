@@ -1,0 +1,26 @@
+#端口，正式环境由外部参数指定
+server:
+  port: 9001
+#应用名称
+spring:
+  application:
+    name: eureka-center
+
+eureka:
+  instance:
+    #以IP地址注册到服务中心，相互注册使用IP地址
+    prefer-ip-address: true
+    #ip-address: 192.168.1.1 #强制指定IP地址，默认会获取本机的IP地址
+    #服务失效时间： 表示eureka server至上一次收到client的心跳之后，等待下一次心跳的超时时间，在这个时间内若没收到下一次心跳，则将移除该instance
+    lease-expiration-duration-in-seconds: 60
+  #服务端设置所以禁用客户端行为，以下2个字设置为false即可
+  client:
+    # 注册自身到eureka服务器
+    register-with-eureka: false
+    #获取注册信息，默认为true
+    fetch-registry: false
+    service-url:
+      defaultZone: http://127.0.0.1:9001/eureka/
+  server:
+    #情理无效的服务时间，默认为60*1000ms，也就是没10秒会去扫描一下那些服务上一次收到心跳时间已经超过lease-expiration-duration-in-seconds设置时间了
+    eviction-interval-timer-in-ms: 10000

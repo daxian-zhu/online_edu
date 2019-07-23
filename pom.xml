@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.clark</groupId>
+	<artifactId>online_edu</artifactId>
+	<version>1.0</version>
+	<packaging>pom</packaging>
+
+	<!-- 下载jar包地址配置 -->
+	<repositories>
+		<repository>
+			<id>clark_public</id>
+			<url>https://maven.zhubanxian.com/repository/maven-public</url>
+		</repository>
+	</repositories>
+	<!-- 发布jar包地址 -->
+	<distributionManagement>
+		<repository>
+			<id>thirdpart</id>
+			<url>https://maven.zhubanxian.com/repository/thirdpart/</url>
+		</repository>
+	</distributionManagement>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
+	</properties>
+	<!-- spring boot配置 -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.0.5.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<!-- spring cloud 配置 -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<!-- 通过以下插件配置，因为springboot的parent包将默认的${*}修改成了@*@ -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<delimiters>
+						<delimiter>${*}</delimiter>
+					</delimiters>
+				</configuration>
+			</plugin>
+		</plugins>
+		<resources>
+	        <resource>
+	            <directory>src/main/resources</directory>
+	            <filtering>true</filtering>
+	            <excludes>
+	                <exclude>**/*.jks</exclude>
+	            </excludes>
+	        </resource>
+	        <resource>
+	            <directory>src/main/resources</directory>
+	            <filtering>false</filtering>
+	            <includes>
+	                <include>**/*.jks</include>
+	            </includes>
+	        </resource>
+	    </resources>
+	</build>
+
+	<modules>
+		<module>online_edu_eureka</module>
+		<module>online_edu_gateway</module>
+		<module>online_edu_user</module>
+    	<module>online_edu_config</module>
+    <module>online_edu_oauth</module>
+    <module>online_edu_com</module>
+    <module>online_edu_customer</module>
+    <module>online_edu_oauth2_config</module>
+    <module>online_edu_student</module>
+  </modules>
+</project>

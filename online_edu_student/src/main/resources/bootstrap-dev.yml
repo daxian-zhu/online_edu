@@ -1,0 +1,29 @@
+#端口，正式环境由外部参数指定
+server:
+  port: 9006
+#应用名称
+spring:
+  application:
+    name: student
+  cloud:
+    config:
+      profile: ${spring.profiles.active}
+      name: ${spring.application.name},common,rabbitmq
+      label: master
+      discovery: 
+        enabled: true
+        service-id: public-config
+eureka:
+  instance:
+    #使用IP注册
+    prefer-ip-address: true
+    #ip-address: 192.168.1.1 #强制指定IP地址，默认会获取本机的IP地址
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    hostname: ${spring.cloud.client.ip-address}
+    #客户端向服务端心跳间隔
+    lease-renewal-interval-in-seconds: 3
+  client:
+    #eureka client间隔多久去拉取服务注册信息，默认为30秒。对于网关或者中心服务可以设置小一点
+    registry-fetch-interval-seconds: 3
+    service-url:
+      defaultZone: http://127.0.0.1:9001/eureka/

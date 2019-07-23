@@ -1,0 +1,64 @@
+#端口，正式环境由外部参数指定
+server:
+  port: 9002
+#应用名称
+spring:
+  application:
+    name: public-config
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://git.zhubanxian.com/zhu/online_edu_config.git
+          search-paths:
+          - common
+          - rabbitmq
+          - redis
+          - gateway
+          - user_center
+          - oauth
+          - customer
+          - student
+          username: zhuwei680913@163.com
+          password: zwass1314
+          basedir: C:/work/config/tmp
+          force-pull: true
+    #开启消息总线
+    bus:
+      enabled: true
+      trace:
+        enabled: true
+  #rabbit配置
+  rabbitmq:
+    host: 47.94.197.44
+    port: 5672
+    username: daxian
+    password: daxianzuishuai
+eureka:
+  instance:
+    #使用IP注册
+    prefer-ip-address: true
+    #ip-address: 192.168.1.1 #强制指定IP地址，默认会获取本机的IP地址
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    hostname: ${spring.cloud.client.ip-address}
+    #客户端向服务端心跳间隔
+    lease-renewal-interval-in-seconds: 3
+  client:
+    #eureka client间隔多久去拉取服务注册信息，默认为30秒。对于网关或者中心服务可以设置小一点
+    registry-fetch-interval-seconds: 10
+    service-url:
+      defaultZone: http://127.0.0.1:9001/eureka/
+
+#暴露刷新接口
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh,info
+#配置访问info信息
+info:
+  app.name: ${spring.application.name}
+  company.name: 北京博学慎思教育科技有限公司
+  company.url: www.xuebaclass.com 
+  build.artifactId: ${project.artifactId}
+  build.version: ${project.version}            
