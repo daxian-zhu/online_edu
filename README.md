@@ -1,11 +1,14 @@
 # online_edu
-**博客地址：**  
-[我的CSDN博客](https://blog.csdn.net/zhuwei_clark/ "大仙的博客")  
-里面有一些异常的解决方法   
+  
+**博客地址：**  [CSDN博客](https://blog.csdn.net/zhuwei_clark/ "大仙的博客")  
+里面有一些异常的解决方法，大家在遇到问题的时候可以参考下。
+  
 **项目架构图：**
-
-
+   
+   
 ![foryou](微服务架构图.png "架构图")
+  
+    
 **项目结构说明：**  
 online_edu  
    |  
