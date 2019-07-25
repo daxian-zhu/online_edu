@@ -106,5 +106,16 @@
 		<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
 	</dependency>
 	
+ 	<dependency>
+        <groupId>com.codingapi.txlcn</groupId>
+        <artifactId>txlcn-tc</artifactId>
+        <version>5.0.2.RELEASE</version>
+    </dependency>
+
+    <dependency>
+        <groupId>com.codingapi.txlcn</groupId>
+        <artifactId>txlcn-txmsg-netty</artifactId>
+        <version>5.0.2.RELEASE</version>
+    </dependency>
   </dependencies>
 </project>

@@ -1,5 +1,7 @@
 package com.clark.online.edu.entity;
 
+import com.clark.online.edu.util.DateUtil;
+
 import lombok.Data;
 
 /**
@@ -24,7 +26,7 @@ public class ParentEntity {
 	/**
 	 * 创建时间
 	 */
-	protected String createDate;
+	protected String createDate = DateUtil.getNowDateTime();
 	/**
 	 * 修改人
 	 */
@@ -32,6 +34,6 @@ public class ParentEntity {
 	/**
 	 * 修改时间
 	 */
-	protected String updateDate;
+	protected String updateDate = DateUtil.getNowDateTime();
 
 }

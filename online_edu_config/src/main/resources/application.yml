@@ -18,7 +18,10 @@ spring:
           - user_center
           - oauth
           - customer
-          basedir: C:/work/config/tmp
+          - student
+          - lcn
+          - readTime
+          basedir: C:/work/config/tmp2
           force-pull: true
     #开启消息总线
     bus:

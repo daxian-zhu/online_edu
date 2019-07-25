@@ -9,7 +9,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 
 import com.clark.online.edu.entity.uc.UC_User;
 import com.clark.online.edu.util.Constant;
-import com.clark.online.edu.util.JsonUtils;
+import com.clark.online_edu.util.JsonUtils;
 
 public class JwtAccessToken extends JwtAccessTokenConverter{
 	 /**

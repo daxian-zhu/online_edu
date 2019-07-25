@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.clark.online.edu.entity.customer.CustomerInfo;
 import com.clark.online.edu.enums.ResponeCode;
 import com.clark.online.edu.util.Result;
 import com.clark.online_edu.student.service.CustomerService;
@@ -25,6 +26,13 @@ public class CustomerServiceImpl implements CustomerService{
 
 	@Override
 	public Result<Map<String, Object>> getCustomerInfo(String id) {
+		// TODO Auto-generated method stub
+		logger.info("调用{}失败","getCustomerInfo");
+	    return Result.failure(ResponeCode.FAIL_1002);
+	}
+
+	@Override
+	public Result updateCustomerInfo(String id, CustomerInfo customerInfo) {
 		// TODO Auto-generated method stub
 		logger.info("调用{}失败","getCustomerInfo");
 	    return Result.failure(ResponeCode.FAIL_1002);

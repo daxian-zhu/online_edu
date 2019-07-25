@@ -7,7 +7,12 @@ package com.clark.online.edu.enums;
  *
  */
 public enum ResponeCode {
-	OK(1, "操作成功"), FAIL_500(500, "系统异常"), FAIL_401(401, "权限认证失败"), FAIL_1001(1001, "缺失请求参数"), FAIL_1002(1002, "服务调用异常"), FAIL_1003(1003, "token无效或缺失token");
+	OK(1, "操作成功"),
+	FAIL_500(500, "系统异常"), 
+	FAIL_401(401, "权限认证失败"), 
+	FAIL_1001(1001, "缺失请求参数"), 
+	FAIL_1002(1002, "服务调用异常"), 
+	FAIL_1003(1003, "token无效或缺失token");
 	/**
 	 * 状态码
 	 */

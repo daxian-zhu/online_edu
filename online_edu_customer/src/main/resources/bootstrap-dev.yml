@@ -8,7 +8,7 @@ spring:
   cloud:
     config:
       profile: ${spring.profiles.active}
-      name: ${spring.application.name},common,rabbitmq
+      name: ${spring.application.name},common,rabbitmq,lcn,readTime
       label: master
       discovery: 
         enabled: true

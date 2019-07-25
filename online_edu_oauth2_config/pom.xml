@@ -33,5 +33,12 @@
 		<artifactId>online_edu_com</artifactId>
 		<version>${project.parent.version}</version>
 	</dependency>
+	<!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
+	<dependency>
+	    <groupId>com.auth0</groupId>
+	    <artifactId>java-jwt</artifactId>
+	    <version>3.8.1</version>
+	</dependency>
+
   </dependencies>
 </project>

@@ -11,6 +11,12 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.interfaces.Claim;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.clark.online.edu.entity.ParentEntity;
+import com.clark.online.edu.entity.uc.UC_User;
+
 /**
  * 授权服务器 TokenStore 配置类，使用 JWT RSA 非对称加密
  * @author 大仙
@@ -38,8 +44,6 @@ public class AuthJWTTokenStore {
                 (keyProperties.getKeyStore().getLocation(), keyProperties.getKeyStore().getSecret().toCharArray())
                 .getKeyPair(keyProperties.getKeyStore().getAlias());
         converter.setKeyPair(keyPair);
-        System.out.println("CCC=================================="+keyPair);
         return converter;
     }
-
 }
