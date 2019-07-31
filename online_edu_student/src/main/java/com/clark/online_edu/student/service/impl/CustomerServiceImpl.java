@@ -10,6 +10,8 @@ import com.clark.online.edu.entity.customer.CustomerInfo;
 import com.clark.online.edu.enums.ResponeCode;
 import com.clark.online.edu.util.Result;
 import com.clark.online_edu.student.service.CustomerService;
+import com.codingapi.txlcn.tc.support.DTXUserControls;
+import com.codingapi.txlcn.tracing.TracingContext;
 
 /**
  * customer调用熔断方法
@@ -33,7 +35,7 @@ public class CustomerServiceImpl implements CustomerService{
 
 	@Override
 	public Result updateCustomerInfo(String id, CustomerInfo customerInfo) {
-		// TODO Auto-generated method stub
+		DTXUserControls.rollbackGroup(TracingContext.tracing().groupId());
 		logger.info("调用{}失败","getCustomerInfo");
 	    return Result.failure(ResponeCode.FAIL_1002);
 	}

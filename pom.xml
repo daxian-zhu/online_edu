@@ -92,5 +92,6 @@
     <module>online_edu_customer</module>
     <module>online_edu_oauth2_config</module>
     <module>online_edu_student</module>
+    <module>online_edu_lcn</module>
   </modules>
 </project>

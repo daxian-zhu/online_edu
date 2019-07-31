@@ -17,7 +17,10 @@ import com.clark.online_edu.http.CurrentHttpServletRequest;
 import com.clark.online_edu.student.dao.StudentInfoDao;
 import com.clark.online_edu.student.service.CustomerService;
 import com.clark.online_edu.student.service.StudentService;
+import com.codingapi.txlcn.common.util.Transactions;
+import com.codingapi.txlcn.tc.annotation.DTXPropagation;
 import com.codingapi.txlcn.tc.annotation.LcnTransaction;
+import com.codingapi.txlcn.tracing.TracingContext;
 /**
  * 学生业务相关
  * @author 大仙
@@ -44,13 +47,7 @@ public class StudentServiceImpl implements StudentService,CurrentHttpServletRequ
     	data.put("studentLevel", "A");
     	String customerId = "11";
     	//获取客户信息
-    	Result<Map<String, Object>> custmerInfo = null;
-		try {
-			custmerInfo = customerService.getCustomerInfo(customerId);
-		} catch (Exception e) {
-			//获取客户信息出错，一般是没权限
-			return Result.failure(e.getMessage());
-		}
+    	Result<Map<String, Object>> custmerInfo =  customerService.getCustomerInfo(customerId);;
 		//判断获取正常还是失败
     	if(custmerInfo.getCode()==ResponeCode.OK.getCode()) {
     		data.put("customerInfo", custmerInfo.getData());
@@ -60,7 +57,7 @@ public class StudentServiceImpl implements StudentService,CurrentHttpServletRequ
     	return Result.OK().setData(data);
 	}
 	
-	@LcnTransaction //分布式事务注解
+	@LcnTransaction(propagation = DTXPropagation.REQUIRED) //分布式事务注解
 	@Transactional //本地事务注解
 	@Override
 	public Result updateStudentInfo(StudentInfo studentInfo) {
@@ -72,6 +69,10 @@ public class StudentServiceImpl implements StudentService,CurrentHttpServletRequ
 		studentInfo.setUpdateDate(DateUtil.getNowDateTime());
 		//更新学生信息
 		studentInfoDao.updateStudentInfo(studentInfo);
+		String groupId = TracingContext.tracing().groupId();
+		String applicationId = Transactions.getApplicationId();
+		System.out.println(groupId);
+		System.out.println(applicationId);
 		//构造客户信息，并更新客户信息
 		CustomerInfo customer = new CustomerInfo();
 		customer.setId(studentInfo.getCustomerId());

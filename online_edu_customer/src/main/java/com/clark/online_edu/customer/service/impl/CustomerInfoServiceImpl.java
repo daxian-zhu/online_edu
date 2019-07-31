@@ -12,7 +12,10 @@ import com.clark.online.edu.util.Result;
 import com.clark.online_edu.customer.dao.CustomerInfoDao;
 import com.clark.online_edu.customer.service.CustomerInfoService;
 import com.clark.online_edu.http.CurrentHttpServletRequest;
+import com.codingapi.txlcn.common.util.Transactions;
+import com.codingapi.txlcn.tc.annotation.DTXPropagation;
 import com.codingapi.txlcn.tc.annotation.LcnTransaction;
+import com.codingapi.txlcn.tracing.TracingContext;
 /**
  * 客户业务接口实现
  * @author 大仙
@@ -27,14 +30,20 @@ public class CustomerInfoServiceImpl implements CustomerInfoService,CurrentHttpS
 	private CustomerInfoDao customerInfoDao;
 
 	@Override
-	@LcnTransaction
+	//事物的参与方
+	@LcnTransaction(propagation = DTXPropagation.SUPPORTS)
 	@Transactional
 	public Result updateCustomerInfo(CustomerInfo customerInfo) {
 		if(customerInfo.getId()==null) {
 			return Result.failure(ResponeCode.FAIL_1001);
 		}
-		if(customerInfo.getId().equals("cfc9c521-ae8c-11e9-b168-00163e0c9f02")) {
-			throw new RuntimeException("就错了");
+		String groupId = TracingContext.tracing().groupId();
+		String applicationId = Transactions.getApplicationId();
+		System.out.println(groupId);
+		System.out.println(applicationId);
+		groupId = null;
+		if(groupId.equals("aa")) {
+			System.out.println("aa");
 		}
 		UC_User uc_User = getUser();
 		customerInfo.setUpdateUser(uc_User.getId());
