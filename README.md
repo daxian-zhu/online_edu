@@ -32,3 +32,6 @@ online_edu
    |  
    |_ _ _ online_edu_student 学生模块，学生业务模块  
  
+**分布式事务说明：**  
+https://blog.csdn.net/zhuwei_clark/article/details/97927248
+ 
