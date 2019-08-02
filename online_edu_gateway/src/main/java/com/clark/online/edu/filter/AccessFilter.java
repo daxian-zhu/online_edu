@@ -1,74 +1,55 @@
 package com.clark.online.edu.filter;
 
-import javax.servlet.http.HttpServletRequest;
+import java.nio.charset.StandardCharsets;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ServerWebExchange;
 
-import com.netflix.zuul.ZuulFilter;
-import com.netflix.zuul.context.RequestContext;
+import com.alibaba.fastjson.JSON;
+import com.clark.online.edu.enums.ResponeCode;
+import com.clark.online.edu.util.Result;
+
+import reactor.core.publisher.Mono;
 
 /**
- * 资源过滤器
- * 所有的资源请求在路由之前进行前置过滤
- * 如果请求头不包含 Authorization参数值，直接拦截不再路由
+ * 资源过滤器 所有的资源请求在路由之前进行前置过滤 如果请求头不包含 Authorization参数值，直接拦截不再路由
+ * 
  * @author 大仙
  *
  */
 @Component
-public class AccessFilter extends ZuulFilter {
+public class AccessFilter implements GlobalFilter {
 
-    private static Logger logger = LoggerFactory.getLogger(AccessFilter.class);
+	private static Logger logger = LoggerFactory.getLogger(AccessFilter.class);
 
-    /**
-     * 过滤器的类型 pre表示请求在路由之前被过滤
-     * @return 类型
-     */
-    @Override
-    public String filterType() {
-        return "pre";
-    }
+	@Override
+	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+		ServerHttpRequest request = exchange.getRequest();
 
-    /**
-     * 过滤器的执行顺序
-     * @return 顺序 数字越大表示优先级越低，越后执行
-     */
-    @Override
-    public int filterOrder() {
-        return 0;
-    }
+		logger.info("send {} request to {}", request.getMethod(), request.getURI().toString());
+		// 获取请求头
+		Object accessToken = request.getHeaders().get("Authorization");
+		if (accessToken == null) {
+			// 没有Authoriztion返回401
+			ServerHttpResponse response = exchange.getResponse();
+			logger.warn("Authorization token is empty");
+			byte[] datas = JSON.toJSONString(Result.failure(ResponeCode.FAIL_401)).getBytes(StandardCharsets.UTF_8);
+		    DataBuffer buffer = response.bufferFactory().wrap(datas);
+			response.setStatusCode(HttpStatus.UNAUTHORIZED);
+	        response.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
+	        return response.writeWith(Mono.just(buffer));
+		}
+		
+		logger.info("Authorization token is ok");
+		return chain.filter(exchange);
+	}
 
-    /**
-     * 过滤器是否会被执行
-     * @return true
-     */
-    @Override
-    public boolean shouldFilter() {
-        return true;
-    }
-
-    /**
-     * 过滤逻辑
-     * @return 过滤结果
-     */
-    @Override
-    public Object run() {
-        RequestContext requestContext = RequestContext.getCurrentContext();
-        HttpServletRequest request = requestContext.getRequest();
-
-        logger.info("send {} request to {}",request.getMethod(),request.getRequestURL().toString());
-        //获取请求头
-        Object accessToken = request.getHeader("Authorization");
-        if (accessToken==null){
-        	//没有Authoriztion返回401
-            logger.warn("Authorization token is empty");
-            requestContext.setSendZuulResponse(false);
-            requestContext.setResponseStatusCode(401);
-            requestContext.setResponseBody("Authorization token is empty");
-            return null;
-        }
-        logger.info("Authorization token is ok");
-        return null;
-    }
 }

@@ -1,7 +1,5 @@
 package com.clark.online_edu.student.config;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
@@ -19,14 +17,10 @@ public class ResourceServerConfig extends ResServerConfig{
     @Override
     public void configure(HttpSecurity http) throws Exception {
     	super.configure(http);
-    	   http.csrf().disable().exceptionHandling()
-           .authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED))
-           .and()
-           .authorizeRequests()
-           .anyRequest().authenticated()
-           .and()
-           .httpBasic();
-
+    	http
+    		//拦截所有请求,下面2种写法都行
+    		.authorizeRequests().antMatchers("/**").authenticated();
+//    		.and().authorizeRequests().anyRequest().authenticated();
     }
     
 }

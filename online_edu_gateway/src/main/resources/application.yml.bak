@@ -1,0 +1,9 @@
+spring:
+  cloud:
+    gateway:
+      default-filters:
+      - name: Hystrix
+              args:
+                name: fallbackcmd
+                fallbackUri: forward:/defaultfallback
+            - StripPrefix=1

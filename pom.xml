@@ -26,7 +26,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
+		<spring-cloud.version>Finchley.SR1</spring-cloud.version>
 	</properties>
 	<!-- spring boot配置 -->
 	<parent>
@@ -93,5 +93,6 @@
     <module>online_edu_oauth2_config</module>
     <module>online_edu_student</module>
     <module>online_edu_lcn</module>
+    <module>online_edu_websocket</module>
   </modules>
 </project>

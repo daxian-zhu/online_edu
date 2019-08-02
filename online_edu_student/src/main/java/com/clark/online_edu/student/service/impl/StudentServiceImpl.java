@@ -41,6 +41,15 @@ public class StudentServiceImpl implements StudentService,CurrentHttpServletRequ
 
 	@Override
 	public Result<Map<String, Object>> getStdeuntInfo(String id) {
+		for (int i = 0; i < 60; i++) {
+			try {
+				System.out.println("======"+i);
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		Map<String, Object> data = new HashMap<String, Object>();
     	data.put("studentName", "大仙超帅");
     	data.put("courseNum", "60");

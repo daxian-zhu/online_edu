@@ -30,8 +30,3 @@ eureka:
 logging:
   level:
     root: info
- #API网关配置
-zuul:
-  sensitiveHeaders: Cookie,Set-Cookie,host,connection,content-length,content-encoding,server,transfer-encoding,x-application-context
-  #添加代理头
-  add-proxy-headers: true

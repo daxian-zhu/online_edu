@@ -2,6 +2,8 @@ package com.clark.online_edu.config;
 
 import java.util.Objects;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.security.oauth2.OAuth2ClientProperties;
@@ -31,27 +33,14 @@ public abstract class ResServerConfig  extends ResourceServerConfigurerAdapter {
     @Autowired
     private OAuth2ClientProperties oAuth2ClientProperties;
 
-    @Bean
-    @Qualifier("authorizationHeaderRequestMatcher")
-    public RequestMatcher authorizationHeaderRequestMatcher() {
-        return new RequestHeaderRequestMatcher("Authorization");
-    }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf()
-                .disable()
-                .exceptionHandling()
-            .and()
-                .headers()
-                .frameOptions()
-                .disable()
-            .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-                .requestMatcher(authorizationHeaderRequestMatcher());
+    	//禁用csrf
+        http.csrf().disable()
+            //错误信息增加状态码显示
+        	.exceptionHandling().authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED))
+        	.and().httpBasic();
     }
 
     @Override
