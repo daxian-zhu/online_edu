@@ -22,6 +22,8 @@ online_edu
    |  
    |_ _ _ online_edu_oauth 认证中心，并提供用户信息接口  
    |  
+   |_ _ _ online_edu_lcn 分布式事务TM  
+   |  
    |_ _ _ online_edu_user 用户中心，提供用户服务和权限接口  
    |  
    |_ _ _ online_edu_gateway 网关，不做权限验证，只验证是否存在Authorization  
@@ -29,4 +31,7 @@ online_edu
    |_ _ _ online_edu_customer 客户模块，客户业务模块  
    |  
    |_ _ _ online_edu_student 学生模块，学生业务模块  
+ 
+**分布式事务说明：**  
+https://blog.csdn.net/zhuwei_clark/article/details/97927248
  
